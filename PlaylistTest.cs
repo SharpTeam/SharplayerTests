@@ -4,6 +4,7 @@ using MediaPlayer;
 using MediaPlayer.Library;
 using MediaPlayer.Media;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace MediaPlayerTest
 {
@@ -44,7 +45,10 @@ namespace MediaPlayerTest
         [TestMethod]
         public void RemoveMedia()
         {
-            pl.Remove(pl.Content[0]);
+            Media med;
+
+            pl.Content.TryPeek(out med);
+            pl.Remove(med);
 
             Assert.AreEqual(6, pl.Content.Count);
         }
@@ -52,7 +56,9 @@ namespace MediaPlayerTest
         [TestMethod]
         public void AddMedia()
         {
-            var med = pl.Content[0];
+            Media med;
+
+            pl.Content.TryPeek(out med);
 
             pl.Add(med);
 
