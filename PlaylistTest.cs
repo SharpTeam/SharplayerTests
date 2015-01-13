@@ -45,10 +45,7 @@ namespace MediaPlayerTest
         [TestMethod]
         public void RemoveMedia()
         {
-            Media med;
-
-            pl.Content.TryPeek(out med);
-            pl.Remove(med);
+            pl.Remove(pl.Content[0]);
 
             Assert.AreEqual(6, pl.Content.Count);
         }
@@ -56,15 +53,13 @@ namespace MediaPlayerTest
         [TestMethod]
         public void AddMedia()
         {
-            Media med;
+            Media med = pl.Content[0];
 
-            pl.Content.TryPeek(out med);
-
+            pl.Remove(med);
             pl.Add(med);
 
             Assert.AreEqual(7, pl.Content.Count);
 
-            pl.Remove(med);
             pl.Add(med);
 
             Assert.AreEqual(7, pl.Content.Count);
