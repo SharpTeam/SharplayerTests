@@ -68,27 +68,39 @@ namespace MediaPlayerTest
         [TestMethod]
         public void Filters()
         {
-            var lst = pl.FiltersBy<Audio>(new Dictionary<string, string>
+            var lst = pl.FilterBy<Audio>(new Dictionary<string, string>
             {
                 {"Artist", "Wild"}
             });
 
             Assert.AreEqual(3, lst.Count);
 
-            lst = pl.FiltersBy<Audio>(new Dictionary<string, string>
+            lst = pl.FilterBy<Audio>(new Dictionary<string, string>
             {
                 {"TrackName", "u"}
             });
 
             Assert.AreEqual(3, lst.Count);
 
-            lst = pl.FiltersBy<Audio>(new Dictionary<string, string>
+            lst = pl.FilterBy<Audio>(new Dictionary<string, string>
             {
                 {"TrackName", "u"},
                 {"Album", "Gone"}
             });
 
             Assert.AreEqual(2, lst.Count);
+        }
+
+        [TestMethod]
+        public void Orders()
+        {
+            var lst = pl.OrderBy<Audio>(new Tuple<string, bool>("Album", false));
+
+            Assert.AreEqual("Wild Shores", ((Audio)lst[0]).Album);
+
+            lst = pl.OrderBy<Audio>(new Tuple<string, bool>("TrackName", true));
+
+            Assert.AreEqual("(With) Our Reservations", ((Audio)lst[0]).TrackName);
         }
     }
 }
